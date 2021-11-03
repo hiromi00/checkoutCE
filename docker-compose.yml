@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  checkoutce_db:
+    image: mysql:5.7
+    restart: unless-stopped
+    volumes:
+      - ./db:/var/lib/mysql
+    env_file:
+      - .env
+    ports:
+      - 3308:3308
+    networks:
+      - ce
+  
+  checkoutce_back:
+    env_file:
+      - .env
+    build:
+      context: api/
+    networks:
+      - ce
+    ports:
+      - 8000:8000
+      - 9229:9229
+    volumes:
+      - ./api:/home/node/app/
+    depends_on:
+      - checkoutce_db
+    command: bash -c 'npm install && npm run rebuild && npm run start:watch'
+    restart: on-failure
+
+  checkoutce_ui:
+    env_file:
+      - .env
+    build:
+      context: front/
+    networks:
+      - ce
+    ports:
+      - 8001:8001
+      - 49153:49153
+    volumes:
+      - ./front:/home/node/app/
+    depends_on:
+      - checkoutce_back
+    command: bash -c 'npm install && npm run build && npm run start'
+    restart: on-failure
+
+networks:
+  ce:
