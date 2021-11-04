@@ -1,8 +1,9 @@
 version: '3'
 
 services:
-  checkoutce_db:
+  db:
     image: mysql:5.7
+    container_name: checkoutce_db
     restart: unless-stopped
     volumes:
       - ./db:/var/lib/mysql
@@ -13,9 +14,10 @@ services:
     networks:
       - ce
   
-  checkoutce_back:
+  back:
     env_file:
       - .env
+    container_name: checkoutce_back
     build:
       context: api/
     networks:
@@ -30,9 +32,10 @@ services:
     command: bash -c 'npm install && npm run rebuild && npm run start:watch'
     restart: on-failure
 
-  checkoutce_ui:
+  front:
     env_file:
       - .env
+    container_name: checkoutce_front
     build:
       context: front/
     networks:
@@ -44,7 +47,7 @@ services:
       - ./front:/home/node/app/
     depends_on:
       - checkoutce_back
-    command: bash -c 'npm install && npm run build && npm run start'
+    command: bash -c 'npm install && npm run start'
     restart: on-failure
 
 networks:
