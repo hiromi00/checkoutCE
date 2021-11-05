@@ -2,7 +2,7 @@
 FROM node:16-alpine3.13
 
 # Create app directory (with user `node`)
-RUN mkdir -p /home/node/app
+#RUN mkdir -p /home/node/app
 
 WORKDIR /home/node/app
 
