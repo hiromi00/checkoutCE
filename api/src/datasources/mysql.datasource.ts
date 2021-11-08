@@ -5,6 +5,11 @@ const config = {
   name: 'mysql',
   connector: 'mysql',
   url: '',
+  /* host: 'localhost',
+  port: 3306,
+  user:  'userce',
+  password: 'P4ssw0rd',
+  database: 'checkoutce' */
   host: process.env.MYSQL_HOST,
   port: process.env.MYSQL_PORT,
   user: process.env.MYSQL_USER,
