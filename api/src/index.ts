@@ -1,6 +1,6 @@
 import {ApplicationConfig, CheckoutceBackApplication} from './application';
-import * as dotenv from 'dotenv';
-dotenv.config();
+import {config} from 'dotenv';
+config();
 export * from './application';
 
 export async function main(options: ApplicationConfig = {}) {
@@ -9,6 +9,7 @@ export async function main(options: ApplicationConfig = {}) {
   await app.start();
 
   const url = app.restServer.url;
+  console.log('host: ', process.env.MYSQL_HOST);
   console.log(`Server is running at ${url}`);
   console.log(`Try ${url}/ping`);
 
