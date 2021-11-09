@@ -2,14 +2,14 @@ version: '3'
 
 services:
   checkoutce_db:
-    image: mysql:5.7
-    restart: unless-stopped
-    volumes:
-      - ./db:/var/lib/mysql
+    image: postgres
     env_file:
-      - api/.env
+      - .env_postgres
     ports:
-      - 3306:3306
+      - 5432:5432
+    volumes:
+      - ./database:/var/lib/postgresql/data
+      - ./pgsql:/docker-emtrypoint-initdb.d
     networks:
       - ce
   

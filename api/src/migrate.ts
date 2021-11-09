@@ -3,10 +3,15 @@ import {CheckoutceBackApplication} from './application';
 export async function migrate(args: string[]) {
   const existingSchema = args.includes('--rebuild') ? 'drop' : 'alter';
   console.log('Migrating schemas (%s existing schema)', existingSchema);
-  console.log(process.env.MYSQL_HOST);
+  console.log(process.env.POSTGRES_HOST);
   const app = new CheckoutceBackApplication();
   await app.boot();
-  await app.migrateSchema({existingSchema});
+  await app.migrateSchema({
+    existingSchema: existingSchema, 
+    models: [
+      'User'
+    ]
+    });
 
   // Connectors usually keep a pool of opened connections,
   // this keeps the process running even after all work is done.

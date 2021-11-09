@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS checkoutce;
+CREATE DATABASE checkoutce;
