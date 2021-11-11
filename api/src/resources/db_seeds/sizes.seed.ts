@@ -1,0 +1,18 @@
+export const sizesSeedArray = [
+    {value: 22},
+    {value: 22.5},
+    {value: 23},
+    {value: 23.5},
+    {value: 24},
+    {value: 24.5},
+    {value: 25},
+    {value: 25.5},
+    {value: 26},
+    {value: 26.5},
+    {value: 27},
+    {value: 27.5},
+    {value: 28},
+    {value: 28.5},
+    {value: 29},
+    {value: 29.5},
+];

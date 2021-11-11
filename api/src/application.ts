@@ -4,11 +4,15 @@ import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import {RepositoryMixin} from '@loopback/repository';
+import {RepositoryMixin, SchemaMigrationOptions} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
+import { SizesRepository, SneakersRepository } from './repositories';
+import { sizesSeedArray } from './resources/db_seeds/sizes.seed';
+import { sneakersSeedArray } from './resources/db_seeds/sneakers.seed';
+import { Sneakers } from './models';
 
 export {ApplicationConfig};
 
@@ -41,4 +45,36 @@ export class CheckoutceBackApplication extends BootMixin(
       },
     };
   }
+
+  async migrateSchema(options?: SchemaMigrationOptions): Promise<void> {
+      await super.migrateSchema(options);
+
+      const sizesRepository = await this.getRepository(SizesRepository);
+      for(let i = 0; i < sizesSeedArray.length; i++){
+        const data = sizesSeedArray[i];
+        const found = await sizesRepository.findOne({where: {value: data.value}});
+        if (found) {
+          sizesRepository.updateById(found.id, data);
+        } else {
+          await sizesRepository.create(data);
+        }
+      }
+      const sizes = await sizesRepository.find();
+      const sneakersRepository = await this.getRepository(SneakersRepository);
+      for(let i = 0; i < sneakersSeedArray.length; i++){
+        const data = sneakersSeedArray[i];
+        const found = await sneakersRepository.findOne({where: {model: data.model}});
+        
+        if (found) {
+          await sneakersRepository.updateById(found.id, data);
+          
+        } else {
+          const sneaker = await sneakersRepository.create(data);
+          for(let j = 0; j < sizes.length; j++) {
+            await sneakersRepository.sizes(sneaker.id).link(sizes[j].id);
+          }
+        }
+      }
+  }
+  
 }

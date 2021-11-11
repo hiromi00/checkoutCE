@@ -1,0 +1,22 @@
+export const sneakersSeedArray = [
+    {model: 'Nike Dunk Low Georgetown', price: 243, image_path: './src/resources/sneakers_seed/01.jpg'},
+    {model: 'Jordan 4 Retro Lightning', price: 234, image_path: './src/resources/sneakers_seed/02.png'},
+    {model: 'Jordan 1 Retro High White University Blue Black', price: 369, image_path: './src/resources/sneakers_seed/03.jpg'},
+    {model: 'New Balance 550 Aime Leon Dore White Grey', price: 220, image_path: './src/resources/sneakers_seed/04.jpg'},
+    {model: 'Nike Dunk Low SE Sail Multi-Camo', price: 156, image_path: './src/resources/sneakers_seed/05.jpg'},
+    /*{model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'},
+    {model: '', price: 0, image_path: './src/resources/sneakers_seed/'}, */
+];
