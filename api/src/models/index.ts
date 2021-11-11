@@ -2,3 +2,8 @@ export * from './test.model';
 export * from './sizes.model';
 export * from './sneakers.model';
 export * from './sneakers-sizes.model';
+export * from './user.model';
+export * from './order-details.model';
+export * from './order-items.model';
+export * from './shopping-session.model';
+export * from './cart-item.model';
