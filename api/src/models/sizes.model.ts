@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {CartItem} from './cart-item.model';
 
 @model({
   settings: {
@@ -54,6 +55,9 @@ export class Sizes extends Entity {
     default: Date.now,
   })
   updated_at: string;
+
+  @hasMany(() => CartItem, {keyTo: 'size_id'})
+  cartItems: CartItem[];
 
   constructor(data?: Partial<Sizes>) {
     super(data);

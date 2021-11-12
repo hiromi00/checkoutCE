@@ -27,6 +27,7 @@ export class ShoppingSession extends Entity {
 
   @property({
     type: 'number',
+    default: 0,
     jsonSchema: {
       minimum: 0.0,
       maximum: 9999999.0,
@@ -37,6 +38,7 @@ export class ShoppingSession extends Entity {
       dataType: 'float',
       dataPrecision: 9,
       dataScale: 2,
+      default: 0
     }
   })
   total?: number;

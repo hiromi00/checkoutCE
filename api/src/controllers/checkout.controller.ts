@@ -1,4 +1,5 @@
-import { authenticate } from '@loopback/authentication';
+import { authenticate, AuthenticationBindings, UserProfileFactory } from '@loopback/authentication';
+import { inject, service } from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -18,12 +19,19 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {CartItem} from '../models';
-import {CartItemRepository} from '../repositories';
+import {CartItem, OrderDetails} from '../models';
+import {CartItemRepository, ShoppingSessionRepository} from '../repositories';
+import { UserProfile } from "@loopback/security";
+import { CheckoutService } from '../services';
 
+@authenticate('user')
 export class CheckoutController {
   constructor(
     @repository(CartItemRepository) public cartItemRepository : CartItemRepository,
+    @repository(ShoppingSessionRepository) public shoppingSessionRepository: ShoppingSessionRepository,
+    @service(CheckoutService) public checkoutService: CheckoutService,
+
+    @inject(AuthenticationBindings.CURRENT_USER) public user: UserProfile,
   ) {}
 
   @post('/checkout')
@@ -37,26 +45,25 @@ export class CheckoutController {
         'application/json': {
           schema: getModelSchemaRef(CartItem, {
             title: 'NewCartItem',
-            exclude: ['id'],
+            exclude: ['id', 'session_id'],
           }),
         },
       },
     })
     cartItem: Omit<CartItem, 'id'>,
   ): Promise<CartItem> {
-    return this.cartItemRepository.create(cartItem);
+    return await this.checkoutService.create(this.user.id, cartItem);
   }
 
-  @authenticate('user')
-  @get('/checkout/count')
+  @post('/checkout/sell')
   @response(200, {
-    description: 'CartItem model count',
-    content: {'application/json': {schema: CountSchema}},
+    description: 'CartItem Sell',
+    content: {'application/json': {schema: getModelSchemaRef(CartItem)}}
   })
-  async count(
-    @param.where(CartItem) where?: Where<CartItem>,
-  ): Promise<Count> {
-    return this.cartItemRepository.count(where);
+  async sell(
+    @param.filter(CartItem) filter?: Filter<CartItem>
+  ): Promise<OrderDetails> {
+    return await this.checkoutService.sell(this.user.id);
   }
 
   @get('/checkout')
@@ -74,7 +81,9 @@ export class CheckoutController {
   async find(
     @param.filter(CartItem) filter?: Filter<CartItem>,
   ): Promise<CartItem[]> {
-    return this.cartItemRepository.find(filter);
+    const session = await this.shoppingSessionRepository.findOne({where: {user_id: this.user.id}});
+
+    return this.cartItemRepository.find({where: {session_id: session!.id}});
   }
 
   @patch('/checkout')

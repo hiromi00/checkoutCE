@@ -10,12 +10,12 @@ export async function migrate(args: string[]) {
     models: [
       'Sizes',
       'Sneakers',
-      'SeneakersSizes',
+      'SneakersSizes',
       'User',
       'ShoppingSession',
       'CartItem',
       'OrderDetails',
-      'OrderItem'
+      'OrderItems'
     ]
     });
 

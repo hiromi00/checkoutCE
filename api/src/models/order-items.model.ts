@@ -33,11 +33,13 @@ export class OrderItems extends Entity {
 
   @property({
     type: 'date',
+    default: Date.now
   })
   created_at?: string;
 
   @property({
     type: 'date',
+    default: Date.now
   })
   updated_at?: string;
 

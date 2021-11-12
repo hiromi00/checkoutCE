@@ -1,6 +1,7 @@
 import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {ShoppingSession} from './shopping-session.model';
 import {Sneakers} from './sneakers.model';
+import {Sizes} from './sizes.model';
 
 @model({
   settings: {
@@ -13,13 +14,19 @@ import {Sneakers} from './sneakers.model';
         entity: 'ShoppingSession',
         entityKey: 'id',
         foreignKey: 'session_id',
-      }, 
+      },
       fk_cartSneaker_id: {
         name: 'fk_cartSneaker_id',
         entity: 'Sneakers',
         entityKey: 'id',
         foreignKey: 'sneakers_id',
-      }, 
+      },
+      fk_cartSize_id: {
+        name: 'fk_cartSize_id',
+        entity: 'Sizes',
+        entityKey: 'id',
+        foreignKey: 'size_id',
+      },
     }
   },
 })
@@ -33,6 +40,7 @@ export class CartItem extends Entity {
 
   @property({
     type: 'number',
+    required: true,
     jsonSchema: {
       minimum: 0,
       maximum: 100,
@@ -42,10 +50,11 @@ export class CartItem extends Entity {
       columnName: 'quantity',
       dataType: 'int',
       dataPrecision: 10,
+      Nullable: 'N'
     }
   })
-  quantity?: number;
-  
+  quantity: number;
+
 
   @belongsTo(() => ShoppingSession, {name: 'session'})
   session_id: number;
@@ -64,7 +73,10 @@ export class CartItem extends Entity {
     default: Date.now
   })
   updated_at?: string;
-  
+
+  @belongsTo(() => Sizes, {name: 'size'})
+  size_id: number;
+
   constructor(data?: Partial<CartItem>) {
     super(data);
   }

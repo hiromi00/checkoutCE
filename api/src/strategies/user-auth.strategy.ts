@@ -7,15 +7,18 @@ import parseBearerToken from 'parse-bearer-token';
 import { service } from "@loopback/core";
 import { UserService } from "../services";
 import { JwtPayload } from "jsonwebtoken";
+import { repository } from "@loopback/repository";
+import { ShoppingSessionRepository } from "../repositories";
 
 export class UserAuth implements AuthenticationStrategy {
     name: string = 'user';
 
     constructor(
         @service(UserService) public userService: UserService,
+        @repository(ShoppingSessionRepository) public shoppingSessionRepository: ShoppingSessionRepository,
     ) {}
 
-    authenticate(request: Request): Promise<UserProfile | undefined> {
+    async authenticate(request: Request): Promise<UserProfile | undefined> {
         
         const token = parseBearerToken(request);
         if (!token) {
@@ -28,7 +31,7 @@ export class UserAuth implements AuthenticationStrategy {
             const profile = Object.assign({
                 id: info.data.id,
                 username: info.data.username,
-                email: info.data.email
+                email: info.data.email,
             });
             
             return profile;

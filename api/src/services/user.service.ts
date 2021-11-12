@@ -18,10 +18,14 @@ export class UserService {
     if ( await this.userRepository.findOne({where: {or: [{username: user.username}, {email: user.email}]}}) ){
       this.userError(400, 'Bad Request', 'That username or email already exists');
     }
-
+    
     const passwordEncrypted = CryptoJS.MD5(user.password).toString();
     user.password = passwordEncrypted;
     const userCreated = await this.userRepository.create(user);
+    const session = new ShoppingSession({
+      user_id: userCreated.id
+    })
+    const sessionCreated = await this.shoppingSessionRepository.create(session);
     return userCreated;  
   }
 
@@ -33,10 +37,6 @@ export class UserService {
     }
     const token = await this.generateToken(user!);
 
-    const session = new ShoppingSession({
-      user_id: user?.id
-    })
-    const sessionCreated = await this.shoppingSessionRepository.create(session);
 
     return {
       user: user?.username,

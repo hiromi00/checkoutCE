@@ -27,16 +27,27 @@ export class OrderDetails extends Entity {
 
   @property({
     type: 'number',
+    default: 0,
+    mysql: {
+      columnName: 'total',
+      dataType: 'float',
+      dataPrecision: 9,
+      dataScale: 2,
+      nullable: 'N',
+      default: 0
+    },
   })
   total?: number;
 
   @property({
     type: 'date',
+    default: Date.now
   })
   created_at?: string;
 
   @property({
     type: 'date',
+    default: Date.now
   })
   updated_at?: string;
 
