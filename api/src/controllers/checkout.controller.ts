@@ -118,6 +118,7 @@ export class CheckoutController {
     @param.path.number('id') id: number,
     @param.filter(CartItem, {exclude: 'where'}) filter?: FilterExcludingWhere<CartItem>
   ): Promise<CartItem> {
+    
     return this.cartItemRepository.findById(id, filter);
   }
 
@@ -137,17 +138,6 @@ export class CheckoutController {
     cartItem: CartItem,
   ): Promise<void> {
     await this.cartItemRepository.updateById(id, cartItem);
-  }
-
-  @put('/checkout/{id}')
-  @response(204, {
-    description: 'CartItem PUT success',
-  })
-  async replaceById(
-    @param.path.number('id') id: number,
-    @requestBody() cartItem: CartItem,
-  ): Promise<void> {
-    await this.cartItemRepository.replaceById(id, cartItem);
   }
 
   @del('/checkout/{id}')

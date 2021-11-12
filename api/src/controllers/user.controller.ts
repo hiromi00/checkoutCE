@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import { service } from '@loopback/core';
 import {
   Count,
@@ -71,6 +72,7 @@ export class UserController {
     return await this.userService.login(creds);
   }
 
+  @authenticate('user')
   @get('/users')
   @response(200, {
     description: 'Array of User model instances',
@@ -89,6 +91,7 @@ export class UserController {
     return this.userRepository.find(filter);
   }
 
+  @authenticate('user')
   @get('/users/{id}')
   @response(200, {
     description: 'User model instance',
@@ -121,6 +124,7 @@ export class UserController {
     return this.userRepository.findById(id, filter);
   } */
 
+  @authenticate('user')
   @patch('/users/{id}')
   @response(204, {
     description: 'User PATCH success',
@@ -139,6 +143,7 @@ export class UserController {
     await this.userRepository.updateById(id, user);
   }
 
+  @authenticate('user')
   @del('/users/{id}')
   @response(204, {
     description: 'User DELETE success',
