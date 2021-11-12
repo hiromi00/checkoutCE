@@ -26,7 +26,7 @@ export class SneakersController {
     public sneakersRepository : SneakersRepository,
   ) {}
 
-  @post('/sneakers')
+  /* @post('/sneakers')
   @response(200, {
     description: 'Sneakers model instance',
     content: {'application/json': {schema: getModelSchemaRef(Sneakers)}},
@@ -45,18 +45,7 @@ export class SneakersController {
     sneakers: Omit<Sneakers, 'id'>,
   ): Promise<Sneakers> {
     return this.sneakersRepository.create(sneakers);
-  }
-
-  @get('/sneakers/count')
-  @response(200, {
-    description: 'Sneakers model count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async count(
-    @param.where(Sneakers) where?: Where<Sneakers>,
-  ): Promise<Count> {
-    return this.sneakersRepository.count(where);
-  }
+  } */
 
   @get('/sneakers')
   @response(200, {
@@ -77,25 +66,7 @@ export class SneakersController {
     return this.sneakersRepository.find(filter);
   }
 
-  @patch('/sneakers')
-  @response(200, {
-    description: 'Sneakers PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Sneakers, {partial: true}),
-        },
-      },
-    })
-    sneakers: Sneakers,
-    @param.where(Sneakers) where?: Where<Sneakers>,
-  ): Promise<Count> {
-    return this.sneakersRepository.updateAll(sneakers, where);
-  }
-
+  
   @get('/sneakers/{id}')
   @response(200, {
     description: 'Sneakers model instance',
@@ -108,12 +79,12 @@ export class SneakersController {
   async findById(
     @param.path.number('id') id: number,
     @param.filter(Sneakers, {exclude: 'where'}) filter?: FilterExcludingWhere<Sneakers>
-  ): Promise<Sneakers> {
+    ): Promise<Sneakers> {
     filter = {"include": ["sizes"]};
     return this.sneakersRepository.findById(id, filter);
   }
 
-  @patch('/sneakers/{id}')
+  /* @patch('/sneakers/{id}')
   @response(204, {
     description: 'Sneakers PATCH success',
   })
@@ -129,24 +100,13 @@ export class SneakersController {
     sneakers: Sneakers,
   ): Promise<void> {
     await this.sneakersRepository.updateById(id, sneakers);
-  }
+  } */
 
-  @put('/sneakers/{id}')
-  @response(204, {
-    description: 'Sneakers PUT success',
-  })
-  async replaceById(
-    @param.path.number('id') id: number,
-    @requestBody() sneakers: Sneakers,
-  ): Promise<void> {
-    await this.sneakersRepository.replaceById(id, sneakers);
-  }
-
-  @del('/sneakers/{id}')
+  /* @del('/sneakers/{id}')
   @response(204, {
     description: 'Sneakers DELETE success',
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.sneakersRepository.deleteById(id);
-  }
+  } */
 }

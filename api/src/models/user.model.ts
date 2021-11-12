@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {ShoppingSession} from './shopping-session.model';
+import {OrderDetails} from './order-details.model';
 
 @model({
   settings: {
@@ -49,7 +51,7 @@ export class User extends Entity {
     type: 'string',
     required: true,
     jsonSchema: {
-      pattern: /^[\w-\d.]+@([\w-]+\.)+[\w-]{2,4}$/.source
+      pattern: /^[ \w - \d \.]+@([\w-]+\.)+[\w-]{2,4}$/.source,
     },
     mysql: {
       columnName: 'email',
@@ -111,6 +113,11 @@ export class User extends Entity {
   })
   updated_at?: string;
 
+  @hasOne(() => ShoppingSession, {keyTo: 'user_id'})
+  shoppingSession: ShoppingSession;
+
+  @hasOne(() => OrderDetails, {keyTo: 'user_id'})
+  orderDetails: OrderDetails;
 
   constructor(data?: Partial<User>) {
     super(data);
