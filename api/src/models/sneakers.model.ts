@@ -1,6 +1,8 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
 import {Sizes} from './sizes.model';
 import {SneakersSizes} from './sneakers-sizes.model';
+import {CartItem} from './cart-item.model';
+import {OrderItems} from './order-items.model';
 
 @model({
   settings: {
@@ -80,6 +82,12 @@ export class Sneakers extends Entity {
 
   @hasMany(() => Sizes, {through: {model: () => SneakersSizes, keyFrom: 'sneaker_id', keyTo: 'size_id'}})
   sizes: Sizes[];
+
+  @hasOne(() => CartItem, {keyTo: 'sneakers_id'})
+  cartItem: CartItem;
+
+  @hasOne(() => OrderItems, {keyTo: 'sneakers_id'})
+  orderItems: OrderItems;
 
   constructor(data?: Partial<Sneakers>) {
     super(data);

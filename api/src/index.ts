@@ -1,5 +1,6 @@
 import {ApplicationConfig, CheckoutceBackApplication} from './application';
 import {config} from 'dotenv';
+import { RestBindings } from '@loopback/rest';
 config();
 export * from './application';
 
@@ -7,7 +8,7 @@ export async function main(options: ApplicationConfig = {}) {
   const app = new CheckoutceBackApplication(options);
   await app.boot();
   await app.start();
-
+  
   const url = app.restServer.url;
   console.log(`Server is running at ${url}`);
   console.log(`Try ${url}/ping`);

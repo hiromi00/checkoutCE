@@ -2,3 +2,8 @@ export * from './test.repository';
 export * from './sizes.repository';
 export * from './sneakers.repository';
 export * from './sneakers-sizes.repository';
+export * from './user.repository';
+export * from './cart-item.repository';
+export * from './order-details.repository';
+export * from './order-items.repository';
+export * from './shopping-session.repository';
