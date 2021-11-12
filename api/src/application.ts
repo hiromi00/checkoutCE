@@ -13,6 +13,8 @@ import { SizesRepository, SneakersRepository } from './repositories';
 import { sizesSeedArray } from './resources/db_seeds/sizes.seed';
 import { sneakersSeedArray } from './resources/db_seeds/sneakers.seed';
 import { Sneakers } from './models';
+import { AuthenticationComponent, registerAuthenticationStrategy } from '@loopback/authentication';
+import { UserAuth } from './strategies/user-auth.strategy';
 
 export {ApplicationConfig};
 
@@ -33,6 +35,8 @@ export class CheckoutceBackApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+    registerAuthenticationStrategy(this, UserAuth);
+    this.component(AuthenticationComponent);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

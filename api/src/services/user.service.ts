@@ -1,15 +1,16 @@
 import {injectable, /* inject, */ BindingScope} from '@loopback/core';
 import { repository } from '@loopback/repository';
 import { HttpErrors } from '@loopback/rest';
-import { Credentials, User } from '../models';
-import { UserRepository } from '../repositories';
+import { Credentials, ShoppingSession, User } from '../models';
+import { ShoppingSessionRepository, UserRepository } from '../repositories';
 import CryptoJS from 'crypto-js';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class UserService {
   constructor(
     @repository(UserRepository) public userRepository : UserRepository,
+    @repository(ShoppingSessionRepository) public shoppingSessionRepository: ShoppingSessionRepository, 
   ) {}
 
   public async signin(user: User): Promise<User>{
@@ -32,6 +33,11 @@ export class UserService {
     }
     const token = await this.generateToken(user!);
 
+    const session = new ShoppingSession({
+      user_id: user?.id
+    })
+    const sessionCreated = await this.shoppingSessionRepository.create(session);
+
     return {
       user: user?.username,
       token: token
@@ -52,7 +58,15 @@ export class UserService {
     return tk;
   }
 
-
+  public validateToken(token: string) {
+    try {
+      const decoded = jwt.verify(token, process.env.TOKEN_KEY!);
+      return decoded;
+    } catch {
+      return null;
+    }
+  }
+  
   private userError(errorCode: number, code: string, message: string) {
     const error = new HttpErrors[errorCode]();
     //Temporalmente se establece asi, ya que el code del 404 es este mismo
@@ -60,4 +74,5 @@ export class UserService {
     error.message = message;
     throw error;
   }
+
 }

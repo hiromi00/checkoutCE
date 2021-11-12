@@ -19,13 +19,14 @@ import {
   HttpErrors,
 } from '@loopback/rest';
 import {Credentials, User} from '../models';
-import {UserRepository} from '../repositories';
+import {ShoppingSessionRepository, UserRepository} from '../repositories';
 import { UserService } from '../services';
 
 
 export class UserController {
   constructor(
     @repository(UserRepository) public userRepository : UserRepository,
+    @repository(ShoppingSessionRepository) public shoppingSessionRepository: ShoppingSessionRepository, 
     @service(UserService) public userService: UserService,
   ) {}
 
@@ -88,25 +89,6 @@ export class UserController {
     return this.userRepository.find(filter);
   }
 
-  @patch('/users')
-  @response(200, {
-    description: 'User PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(User, {partial: true}),
-        },
-      },
-    })
-    user: User,
-    @param.where(User) where?: Where<User>,
-  ): Promise<Count> {
-    return this.userRepository.updateAll(user, where);
-  }
-
   @get('/users/{id}')
   @response(200, {
     description: 'User model instance',
@@ -122,6 +104,22 @@ export class UserController {
   ): Promise<User> {
     return this.userRepository.findById(id, filter);
   }
+  
+  /* @get('/users/{id}/session')
+  @response(200, {
+    description: 'User model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(User, {includeRelations: true}),
+      },
+    },
+  })
+  async findSession(
+    @param.path.number('id') id: number,
+    @param.filter(User, {exclude: 'where'}) filter?: FilterExcludingWhere<User>
+  ): Promise<User> {
+    return this.userRepository.findById(id, filter);
+  } */
 
   @patch('/users/{id}')
   @response(204, {
