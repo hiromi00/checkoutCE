@@ -9,13 +9,14 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
-import { SizesRepository, SneakersRepository } from './repositories';
+import { ShoppingSessionRepository, SizesRepository, SneakersRepository, UserRepository } from './repositories';
 import { sizesSeedArray } from './resources/db_seeds/sizes.seed';
 import { sneakersSeedArray } from './resources/db_seeds/sneakers.seed';
-import { Sneakers } from './models';
+import { ShoppingSession } from './models';
 import { AuthenticationComponent, registerAuthenticationStrategy } from '@loopback/authentication';
 import { UserAuth } from './strategies/user-auth.strategy';
-
+import { userSeed } from './resources/db_seeds/user.seed';
+import CryptoJS from 'crypto-js';
 export {ApplicationConfig};
 
 export class CheckoutceBackApplication extends BootMixin(
@@ -79,6 +80,22 @@ export class CheckoutceBackApplication extends BootMixin(
           }
         }
       }
+
+      const userRepository = await this.getRepository(UserRepository);
+      const shoppingSessionRepository = await this.getRepository(ShoppingSessionRepository);
+      const found = await userRepository.findOne({where: {or: [ {username: userSeed.username}, {email: userSeed.email} ]}});
+      const passwordEncrypted = CryptoJS.MD5(userSeed.password).toString();
+      userSeed.password = passwordEncrypted;
+      if (found) {
+        userRepository.updateById(found.id, userSeed);
+      } else {
+        const userCreated = await userRepository.create(userSeed);
+        const session = new ShoppingSession({
+          user_id: userCreated.id
+        });
+        await shoppingSessionRepository.create(session);
+      }
+      
   }
   
 }

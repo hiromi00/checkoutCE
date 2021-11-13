@@ -86,25 +86,6 @@ export class CheckoutController {
     return this.cartItemRepository.find({where: {session_id: session!.id}});
   }
 
-  @patch('/checkout')
-  @response(200, {
-    description: 'CartItem PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(CartItem, {partial: true}),
-        },
-      },
-    })
-    cartItem: CartItem,
-    @param.where(CartItem) where?: Where<CartItem>,
-  ): Promise<Count> {
-    return this.cartItemRepository.updateAll(cartItem, where);
-  }
-
   @get('/checkout/{id}')
   @response(200, {
     description: 'CartItem model instance',
@@ -118,7 +99,7 @@ export class CheckoutController {
     @param.path.number('id') id: number,
     @param.filter(CartItem, {exclude: 'where'}) filter?: FilterExcludingWhere<CartItem>
   ): Promise<CartItem> {
-    
+
     return this.cartItemRepository.findById(id, filter);
   }
 
