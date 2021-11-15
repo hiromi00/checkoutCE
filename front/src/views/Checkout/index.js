@@ -15,13 +15,17 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
+import {ReactComponent as LogoCheckout} from "../../assets/images/whiteLogo.svg"
+import { Avatar } from '@mui/material';
+import Utils from "../../utils/alert"
+import { useNavigate } from "react-router-dom";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="#">
+        CheckoutCE
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -29,7 +33,7 @@ function Copyright() {
   );
 }
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Dirección de envío', 'Detalles de pago', 'Revise su orden'];
 
 function getStepContent(step) {
   switch (step) {
@@ -44,10 +48,22 @@ function getStepContent(step) {
   }
 }
 
-const theme = createTheme();
+const theme = createTheme(
+  {palette: {
+    secondary: {
+      main: "#2ebf91",
+    },
+    primary: {
+      main: "#8360c3",
+    },
+  },}
+);
+
+const alerts  = Utils;
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const navigate = useNavigate();
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -56,6 +72,10 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const handlenotification = () => {
+    alerts.success("", () => navigate(`/orders`),)
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,12 +86,14 @@ export default function Checkout() {
         elevation={0}
         sx={{
           position: 'relative',
+          backgroundColor: theme.palette.primary.main,
           borderBottom: (t) => `1px solid ${t.palette.divider}`,
         }}
       >
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
+        <Avatar sx={{ bgcolor: "transparent", mx: "2%" }}><LogoCheckout/></Avatar>
+          <Typography variant="h6" color="white" noWrap>
+            CheckoutCE
           </Typography>
         </Toolbar>
       </AppBar>
@@ -91,13 +113,9 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Gracias por tu pedido.
                 </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
+                {handlenotification()}
               </React.Fragment>
             ) : (
               <React.Fragment>
@@ -105,7 +123,7 @@ export default function Checkout() {
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                      Back
+                      Regresar
                     </Button>
                   )}
 
@@ -114,7 +132,7 @@ export default function Checkout() {
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Realizar orden' : 'Siguiente'}
                   </Button>
                 </Box>
               </React.Fragment>
