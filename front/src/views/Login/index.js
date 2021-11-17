@@ -105,7 +105,7 @@ export default function SignInSide() {
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Recuérdame"
+                label="No me olvides"
               />
               <Button
                 type="submit"
