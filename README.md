@@ -31,12 +31,38 @@ La etiqueta `-d` corre el contenedor como un proceso de fondo y `--build` hará 
 
 **Nota: Si cuentas con sistema operativo Windows es recomendable levantar el proyecto en una terminal linux**
 
+#### Semana #1:
+
 Si todo fue exitoso el proyecto se mostrará de la siguiente manera en docker desktop
 ![docker](https://github.com/hiromi00/checkoutCE/blob/main/assets/containers.png?raw=true "Docker")
 
 Primera versión del frontend
 
 ![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/frontendv1.png?raw=true"React")
+
+#### Semana #2:
+
+Login de la aplicación
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/login.PNG?raw=true"Login")
+
+SignUp de la aplicación
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/signup.PNG?raw=true"SignUp")
+
+Pantalla principal
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/carrito.PNG?raw=true"Dashboard")
+
+Pasos del checkout
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/checkout1.PNG?raw=true"Checkout")
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/checkout2.PNG?raw=true"Checkout")
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/checkout3.PNG?raw=true"Checkout")
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/checkout4.PNG?raw=true"Checkout")
+
 
 #### Datos técnicos:
 
