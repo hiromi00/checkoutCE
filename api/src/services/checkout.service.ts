@@ -21,8 +21,22 @@ export class CheckoutService {
     const size = await this.sizesRepository.findById(cartItem.size_id);
 
     cartItem.session_id = session?.id!;
-
-    const cartItemCreated = await this.cartItemRepository.create(cartItem);
+    const cartItems = await this.cartItemRepository.find({where: {session_id: session!.id}});
+    let cartItemCreated = new CartItem();
+    if (cartItems.length > 0) {
+      console.log(cartItems);
+      cartItems.filter(item => {
+        console.log(item.sneakers_id === cartItem.sneakers_id);
+        if(item.sneakers_id === cartItem.sneakers_id){
+          cartItem.quantity += item.quantity;
+          cartItem.id = item.id;
+          cartItemCreated = cartItem;
+        }
+      });
+      await this.cartItemRepository.updateById(cartItemCreated.id, cartItemCreated);
+    } else {
+      cartItemCreated = await this.cartItemRepository.create(cartItem);
+    }
     if(cartItemCreated.sneakers_id) {
 
       const sneakers = await this.sneakersRepository.findById(cartItemCreated.sneakers_id);
