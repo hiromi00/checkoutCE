@@ -23,24 +23,25 @@ export class CheckoutService {
     cartItem.session_id = session?.id!;
     const cartItems = await this.cartItemRepository.find({where: {session_id: session!.id}});
     let cartItemCreated = new CartItem();
+    let flag = false;
+    let originalQuant = cartItem.quantity;
     if (cartItems.length > 0) {
-      console.log(cartItems);
       cartItems.filter(item => {
-        console.log(item.sneakers_id === cartItem.sneakers_id);
         if(item.sneakers_id === cartItem.sneakers_id){
           cartItem.quantity += item.quantity;
           cartItem.id = item.id;
           cartItemCreated = cartItem;
+          flag = true;
         }
       });
-      await this.cartItemRepository.updateById(cartItemCreated.id, cartItemCreated);
+      (flag) ? await this.cartItemRepository.updateById(cartItemCreated.id, cartItemCreated) : cartItemCreated = await this.cartItemRepository.create(cartItem);
     } else {
       cartItemCreated = await this.cartItemRepository.create(cartItem);
     }
     if(cartItemCreated.sneakers_id) {
 
       const sneakers = await this.sneakersRepository.findById(cartItemCreated.sneakers_id);
-      for(let i = 0; i < cartItem.quantity; i++){
+      for(let i = 0; i < originalQuant; i++){
         session!.total! += sneakers.price;
       }
       await this.shoppingSessionRepository.updateById(session!.id!, session!);
