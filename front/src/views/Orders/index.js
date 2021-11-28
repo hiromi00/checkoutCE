@@ -1,10 +1,8 @@
 import React from 'react'
-
+import OrdersView from "../Home/Orders"
 const Orders = () => {
     return (
-        <div>
-            Órdenes  
-        </div>
+        <OrdersView/>
     )
 }
 

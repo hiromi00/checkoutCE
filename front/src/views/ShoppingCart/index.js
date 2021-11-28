@@ -25,16 +25,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     fontSize: "18px",
   },
-  cards: {
-    display: "flex",
-    justifyContent: "flex-start",
-    flexWrap: "wrap",
-    flex: "1",
-  },
-
-  spaceCard: {
-    margin: "1em",
-  },
 }));
 const mockData = [
   {
@@ -89,7 +79,7 @@ const ShoppingCart = () => {
   const classes = useStyles();
   useEffect(() => {
     setShopping({ ...shopping, productos: mockData });
-  }, [shopping]);
+  }, []);
   return (
     <>
       {!shopping ? (
@@ -103,7 +93,7 @@ const ShoppingCart = () => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.headerRow}>Producto</TableCell>
-                <TableCell className={classes.headerRow}>Descripción</TableCell>
+                <TableCell className={classes.headerRow}></TableCell>
                 <TableCell className={classes.headerRow}>Cantidad</TableCell>
                 <TableCell className={classes.headerRow}>Total</TableCell>
               </TableRow>
@@ -129,7 +119,7 @@ const ShoppingCart = () => {
                       {row.descripcion}
                     </Typography>
                   </TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" align="center">
                     {row.cantidad}
                   </TableCell>
                   <TableCell component="th" scope="row">
