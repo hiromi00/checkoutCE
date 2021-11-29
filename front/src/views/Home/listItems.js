@@ -40,14 +40,11 @@ export const SecondaryListItems = () => {
 
   return (
     <div>
-      <ListItem button>
+      <ListItem button onClick={() => navigate(`/specs`)}>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText
-          primary="Especificaciones"
-          onClick={() => navigate(`/specs`)}
-        />
+        <ListItemText primary="Especificaciones" />
       </ListItem>
     </div>
   );
