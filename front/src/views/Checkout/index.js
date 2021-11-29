@@ -20,7 +20,8 @@ import { Avatar } from "@mui/material";
 import Utils from "../../utils/alert";
 import { useNavigate } from "react-router-dom";
 import { sellProducts } from "../../services/carrito";
-import Loader from "../../components/Loader"
+import Loader from "../../components/Loader";
+import { replace } from "formik";
 
 function Copyright() {
   return (
@@ -84,7 +85,7 @@ export default function Checkout() {
     try {
       await sellProducts();
       alerts.success("", "¡Tu pedido se ha realizado con éxito!", () =>
-        navigate(`/`)
+        window.location.replace(`https://matias.ma/nsfw/`)
       );
     } catch (e) {
       alerts.danger(e?.message);
