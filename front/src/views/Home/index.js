@@ -100,7 +100,6 @@ function DashboardContent({ children, shoppingCart = 0 }) {
     setOpen(!open);
   };
 
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -125,10 +124,14 @@ function DashboardContent({ children, shoppingCart = 0 }) {
             </IconButton>
             <Typography
               component="h1"
-              variant="h6"
+              variant="h4"
               color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{
+                flexGrow: 1,
+                fontFamily: "Acme, sans-serif",
+                fontWeight: "normal",
+              }}
             >
               Sneakers CE
             </Typography>
