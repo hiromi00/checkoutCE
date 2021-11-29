@@ -43,12 +43,12 @@ export default function Review() {
     fetchCart();
   }, []);
 
-  
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Orden de compra
       </Typography>
+      {loading && <Loader />}
       <List disablePadding>
         {products.map((product, index) => (
           <ListItem key={index} sx={{ py: 1, px: 0 }}>
