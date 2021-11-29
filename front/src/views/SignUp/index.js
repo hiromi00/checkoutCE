@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -17,6 +15,9 @@ import { signUp } from "../../services/auth";
 import Utils from "../../utils/alert";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import { ReactComponent as LogoCheckout } from "../../assets/images/whiteLogo.svg";
 
 function Copyright(props) {
   return (
@@ -36,22 +37,21 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: "#2ebf91",
+    },
+    primary: {
+      main: "#8360c3",
+    },
+  },
+});
 const alerts = Utils;
 
 export default function SignUp() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
 
   useEffect(() => {
     if (loading) {
@@ -86,8 +86,27 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppBar
+        position="absolute"
+        color="default"
+        elevation={0}
+        sx={{
+          position: "relative",
+          backgroundColor: theme.palette.primary.main,
+          borderBottom: (t) => `1px solid ${t.palette.divider}`,
+        }}
+      >
+        <Toolbar>
+          <Avatar sx={{ bgcolor: "transparent", mx: "2%" }}>
+            <LogoCheckout />
+          </Avatar>
+          <Typography variant="h6" color="white" noWrap>
+            CheckoutCE
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         {(loading && <Loader />) || (
           <Box
             sx={{
@@ -103,12 +122,7 @@ export default function SignUp() {
             <Typography component="h1" variant="h5">
               Nuevo usuario
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 3 }}
-            >
+            <Box component="form" noValidate sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12}>
                   <TextField
@@ -131,7 +145,6 @@ export default function SignUp() {
                     fullWidth
                     id="name"
                     label="Nombre"
-                    autoFocus
                     onChange={formik.handleChange}
                     value={formik.values.name}
                   />

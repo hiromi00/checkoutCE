@@ -8,4 +8,8 @@ const signUp = (user) => {
   return axios.post("signin", user);
 };
 
-export { signUp };
+const login = (user) => {
+  return axios.post("login", user);
+};
+
+export { signUp, login };
