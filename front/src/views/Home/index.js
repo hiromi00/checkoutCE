@@ -130,7 +130,7 @@ function DashboardContent({ children, shoppingCart = 0 }) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Sneackers CE
+              Sneakers CE
             </Typography>
             <IconButton
               color="inherit"

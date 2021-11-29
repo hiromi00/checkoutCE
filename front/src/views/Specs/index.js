@@ -1,5 +1,5 @@
 import React from "react";
-import HtmlIcon from '@mui/icons-material/Code';
+import HtmlIcon from "@mui/icons-material/Code";
 import { ReactComponent as NodeLogo } from "../../assets/icons/node.svg";
 import { ReactComponent as ReactLogo } from "../../assets/icons/reactjs-icon.svg";
 import { ReactComponent as MySQLLogo } from "../../assets/icons/mysql-icon.svg";
@@ -8,12 +8,19 @@ import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import clsx from "clsx";
 const useStyles = makeStyles((theme) => ({
-  container: {
+  mainContainer: {
     display: "flex",
     flexDirection: "column",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   element: {
     display: "flex",
@@ -57,17 +64,15 @@ const specs = [
 const Specs = () => {
   const classes = useStyles();
   return (
-    <Box className={classes.container}>
-      {specs.map((spec) => (
-        <Box
-          component="a"
-          className={clsx(classes.element)}
-          href={spec.link}
-        >
-          {spec.logo}
-          <Typography className={classes.fontSpecs}>{spec.nombre}</Typography>
-        </Box>
-      ))}
+    <Box className={classes.mainContainer}>
+      <Box className={classes.container}>
+        {specs.map((spec) => (
+          <Box component="a" className={clsx(classes.element)} href={spec.link}>
+            {spec.logo}
+            <Typography className={classes.fontSpecs}>{spec.nombre}</Typography>
+          </Box>
+        ))}
+      </Box>
     </Box>
   );
 };

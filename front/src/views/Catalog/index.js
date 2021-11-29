@@ -46,9 +46,7 @@ const Catalog = () => {
     <div className={classes.container}>
       <div className={classes.cards}>
         {loading ? (
-          <div>
-            <Loader />
-          </div>
+          <Loader />
         ) : (
           <>
             {sneakers.map((item, index) => (
