@@ -20,7 +20,7 @@ function CardMui() {
         component="img"
         height="140"
         image="https://images6.alphacoders.com/361/thumbbig-361483.webp"
-        alt="green iguana"
+        alt="articulo"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

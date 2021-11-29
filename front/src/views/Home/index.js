@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -94,11 +94,12 @@ const mdTheme = createTheme({
 });
 
 function DashboardContent({ children, shoppingCart = [] }) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
 
   return (
     <ThemeProvider theme={mdTheme}>

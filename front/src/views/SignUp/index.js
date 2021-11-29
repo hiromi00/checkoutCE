@@ -78,8 +78,8 @@ export default function SignUp() {
             () => navigate(`/login`)
           );
         })
-        .catch((e) => {
-          alerts.danger(e?.message, () => navigate(`/signup`));
+        .catch((error) => {
+          alerts.danger(error.message, () => navigate(`/signup`));
         });
     },
   });

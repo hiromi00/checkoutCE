@@ -10,7 +10,8 @@ export default function CircularIndeterminate() {
         justifyContent: `center`,
         width: `100%`,
         height: `100%`,
-        marginTop: `4em`,
+        marginTop: `2em`,
+        marginBottom: `2em`,
         alignItems: `center`,
         flexDirection: `column`,
       }}

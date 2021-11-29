@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -13,6 +13,7 @@ import Utils from "../../utils/alert";
 import { useFormik } from "formik";
 import { login } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader";
 
 function Copyright(props) {
   return (
@@ -46,7 +47,7 @@ const alerts = Utils;
 
 export default function SignInSide() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const onLogin = (data) => {
     localStorage.setItem("user", JSON.stringify(data));
@@ -58,6 +59,7 @@ export default function SignInSide() {
       password: "",
     },
     onSubmit: async (values) => {
+      setLoading(true);
       await login(values)
         .then(({ data }) => {
           onLogin(data);
@@ -66,6 +68,7 @@ export default function SignInSide() {
         .catch((e) => {
           alerts.danger(e?.message);
         });
+      setLoading(false);
     },
   });
 
@@ -137,13 +140,16 @@ export default function SignInSide() {
               >
                 Iniciar sesión
               </Button>
-              <Grid container>
-                <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"¿No tienes cuenta? Regístrate"}
-                  </Link>
-                </Grid>
-              </Grid>
+              {loading && (
+                <div>
+                  <Loader />
+                </div>
+              )}
+              <div>
+                <Link href="/signup" variant="body2">
+                  {"¿No tienes cuenta? Regístrate"}
+                </Link>
+              </div>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
