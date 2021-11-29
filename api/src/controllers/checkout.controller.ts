@@ -83,7 +83,7 @@ export class CheckoutController {
   ): Promise<CartItem[]> {
     const session = await this.shoppingSessionRepository.findOne({where: {user_id: this.user.id}});
 
-    return this.cartItemRepository.find({where: {session_id: session!.id}});
+    return this.cartItemRepository.find({where: {session_id: session!.id}, include: ['sneakers']});
   }
 
   @get('/checkout/{id}')

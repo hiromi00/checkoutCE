@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const getToken = () => {
-
-  const { token } = JSON.parse(localStorage.getItem("user"));
-  return token ? `Bearer ${token}` : null;
+  const user  = JSON.parse(localStorage.getItem("user"));
+  if(!user) return null;
+  return user.token ? `Bearer ${user.token}` : null;
 };
 
 const signUp = (user) => {
