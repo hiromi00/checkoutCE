@@ -1,5 +1,5 @@
 import React from "react";
-import HtmlIcon from "@mui/icons-material/Html";
+import HtmlIcon from '@mui/icons-material/Code';
 import { ReactComponent as NodeLogo } from "../../assets/icons/node.svg";
 import { ReactComponent as ReactLogo } from "../../assets/icons/reactjs-icon.svg";
 import { ReactComponent as MySQLLogo } from "../../assets/icons/mysql-icon.svg";

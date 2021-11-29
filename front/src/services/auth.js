@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const getToken = () => {
-  return localStorage.getItem("token");
+  const { token } = JSON.parse(localStorage.getItem("user"));
+  return token ? `Bearer ${token}` : null;
 };
 
 const signUp = (user) => {
@@ -12,4 +13,4 @@ const login = (user) => {
   return axios.post("login", user);
 };
 
-export { signUp, login };
+export { getToken, signUp, login };

@@ -13,18 +13,7 @@ import axios from "axios";
 
 function App() {
   const [shoppingCart, setShoppingCart] = useState([`una gorda`, `joto`]);
-
-  useEffect(() => {
-    // Add a request interceptor
-    const header = axios.interceptors.request.use(function (config) {
-      const { token } = JSON.parse(localStorage.getItem("user"));
-      config.headers.Authorization = token ?? null;
-      return config;
-    });
-
-    return axios.interceptors.request.eject(header);
-  }, []);
-
+  
   // Wrapper para <Route> que redirige al login si no se está autenticado
   const PrivateRoute = ({ children }) =>
     JSON.parse(localStorage.getItem(`user`)) ? (
