@@ -93,7 +93,7 @@ const mdTheme = createTheme({
   },
 });
 
-function DashboardContent({ children, shoppingCart = [] }) {
+function DashboardContent({ children, shoppingCart = 0 }) {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const toggleDrawer = () => {
@@ -136,7 +136,7 @@ function DashboardContent({ children, shoppingCart = [] }) {
               color="inherit"
               onClick={() => navigate(`/shopping_cart`)}
             >
-              <Badge badgeContent={shoppingCart.length} color="secondary">
+              <Badge badgeContent={shoppingCart} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

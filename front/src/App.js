@@ -12,7 +12,7 @@ import Specs from "./views/Specs";
 import axios from "axios";
 
 function App() {
-  const [shoppingCart, setShoppingCart] = useState([`una gorda`, `joto`]);
+  const [shoppingCart, setShoppingCart] = useState(0);
   
   // Wrapper para <Route> que redirige al login si no se está autenticado
   const PrivateRoute = ({ children }) =>
@@ -40,7 +40,7 @@ function App() {
           element={
             <PrivateRoute>
               <AppBar shoppingCart={shoppingCart}>
-                <Catalog />
+                <Catalog setShoppingCart={setShoppingCart}/>
               </AppBar>
             </PrivateRoute>
           }

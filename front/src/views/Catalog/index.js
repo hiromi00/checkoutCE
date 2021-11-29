@@ -1,6 +1,8 @@
-import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
+import { makeStyles } from "@mui/styles";
 import CardArticulo from "../../components/CardArticulo";
+import { getCatalog } from "../../services/catalog";
+import Utils from "../../utils/alert";
 import Loader from "../../components/Loader";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,30 +22,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const foo = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const alerts = Utils;
+
 const Catalog = () => {
+  const [sneakers, setSneakers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (loading) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 400);
-    }
-  }, [loading]);
+    const get = async () => {
+      await getCatalog()
+        .then(({ data }) => setSneakers(data))
+        .catch((e) => {
+          alerts.danger(e?.message);
+        });
+
+      setLoading(false);
+    };
+    get();
+  }, []);
 
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      {(loading && <Loader />) || (
-        <div className={classes.cards}>
-          {foo.map((item, index) => (
-            <div className={classes.spaceCard}>
-              <CardArticulo />
-            </div>
-          ))}
-        </div>
-      )}
+      <div className={classes.cards}>
+        {loading ? (
+          <div>
+            <Loader />
+          </div>
+        ) : (
+          <>
+            {sneakers.map((item, index) => (
+              <div key={item.id} className={classes.spaceCard}>
+                <CardArticulo
+                  id={item.id}
+                  model={item.model}
+                  price={item.price}
+                  path={item.image_path}
+                />
+              </div>
+            ))}
+          </>
+        )}
+      </div>
     </div>
   );
 };
