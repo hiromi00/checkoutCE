@@ -6,7 +6,7 @@ const classes = {
     popup: `swal-popup`,
 };
 
-const success = (text, confirmCallback, cancelCallback) => {
+const success = (text, title, confirmCallback, cancelCallback) => {
     const successSwal = withReactContent(Swal);
 
     return successSwal
@@ -16,7 +16,7 @@ const success = (text, confirmCallback, cancelCallback) => {
             customClass: classes,
             confirmButtonText: `Aceptar`,
             confirmButtonClass: `btn-crea`,
-            title: `¡Tu pedido se ha realizado con éxito!`,
+            title: title ?? `¡Tu pedido se ha realizado con éxito!`,
             html: text,
             icon: `success`,
         })
