@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,6 +14,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useFormik } from "formik";
 import { signUp } from "../../services/auth";
+import Utils from "../../utils/alert";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader";
 
 function Copyright(props) {
   return (
@@ -34,8 +37,12 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
+const alerts = Utils;
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -46,6 +53,14 @@ export default function SignUp() {
     });
   };
 
+  useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 400);
+    }
+  }, [loading]);
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -55,9 +70,17 @@ export default function SignUp() {
       password: "",
     },
     onSubmit: async (values) => {
-      await signUp(values).then((response) => {
-        alert(JSON.stringify(response, null, 2));
-      }).catch(console.error);
+      await signUp(values)
+        .then((response) => {
+          alerts.success(
+            ``,
+            `Usuario ${response.data.username} creado con éxito`,
+            () => navigate(`/login`)
+          );
+        })
+        .catch((e) => {
+          alerts.danger(e?.message, () => navigate(`/signup`));
+        });
     },
   });
 
@@ -65,109 +88,111 @@ export default function SignUp() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+        {(loading && <Loader />) || (
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  autoComplete="username"
-                  name="username"
-                  required
-                  fullWidth
-                  id="username"
-                  label="Nombre de usuario"
-                  autoFocus
-                  onChange={formik.handleChange}
-                  value={formik.values.username}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Nombre"
-                  autoFocus
-                  onChange={formik.handleChange}
-                  value={formik.values.name}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastname"
-                  label="Apellido"
-                  name="lastname"
-                  autoComplete="family-name"
-                  onChange={formik.handleChange}
-                  value={formik.values.lastname}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Correo electrónico"
-                  name="email"
-                  autoComplete="email"
-                  onChange={formik.handleChange}
-                  value={formik.values.email}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Contraseña"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              onClick={formik.handleSubmit}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Nuevo usuario
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
             >
-              Crea tu cuenta
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2">
-                  ¿Ya tienes una cuenta? Inicia sesión
-                </Link>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    autoComplete="username"
+                    name="username"
+                    required
+                    fullWidth
+                    id="username"
+                    label="Nombre de usuario"
+                    autoFocus
+                    onChange={formik.handleChange}
+                    value={formik.values.username}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    autoComplete="given-name"
+                    name="name"
+                    required
+                    fullWidth
+                    id="name"
+                    label="Nombre"
+                    autoFocus
+                    onChange={formik.handleChange}
+                    value={formik.values.name}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="lastname"
+                    label="Apellido"
+                    name="lastname"
+                    autoComplete="family-name"
+                    onChange={formik.handleChange}
+                    value={formik.values.lastname}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    label="Correo electrónico"
+                    name="email"
+                    autoComplete="email"
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Contraseña"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
+              <Button
+                type="submit"
+                onClick={formik.handleSubmit}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Crea tu cuenta
+              </Button>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  <Link href="/login" variant="body2">
+                    ¿Ya tienes una cuenta? Inicia sesión
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
           </Box>
-        </Box>
+        )}
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>

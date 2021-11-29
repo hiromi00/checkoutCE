@@ -10,8 +10,9 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { Box, fontSize } from "@mui/system";
+import { Box } from "@mui/system";
 import { makeStyles } from "@mui/styles";
+import Loader from "../../components/Loader"
 const useStyles = makeStyles((theme) => ({
   descriptionFont: {
     opacity: 1,
@@ -25,13 +26,16 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     fontSize: "18px",
   },
+  cellContainer: {
+    padding: "0px",
+  },
 }));
 const mockData = [
   {
     id: Math.random(),
     nombre: "Producto 1",
     cantidad: "10",
-    precio: "200",
+    precio: "200000",
     descripcion:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
     imagen:
@@ -77,61 +81,74 @@ const mockData = [
 const ShoppingCart = () => {
   const [shopping, setShopping] = useState({});
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     setShopping({ ...shopping, productos: mockData });
   }, []);
   return (
-    <>
-      {!shopping ? (
+    <div>
+      {(loading && <Loader />) || (
         <div>
-          <ShoppingCartIcon />
-          {` No hay productos en tu carrito`}
+          {!shopping ? (
+            <div>
+              <ShoppingCartIcon />
+              {` No hay productos en tu carrito`}
+            </div>
+          ) : (
+            <TableContainer component={Paper}>
+              <Table aria-label="caption table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.headerRow}>
+                      Producto
+                    </TableCell>
+                    <TableCell className={classes.headerRow}></TableCell>
+                    <TableCell className={classes.headerRow}>
+                      Cantidad
+                    </TableCell>
+                    <TableCell className={classes.headerRow}>Total</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {shopping?.productos?.map((row, index) => (
+                    <TableRow key={row.id}>
+                      <TableCell component="th" scope="row">
+                        <>
+                          <Box
+                            component="img"
+                            src={row.imagen}
+                            sx={{
+                              maxHeight: "150px",
+                              maxWidth: "150px",
+                              pointerEvents: "none",
+                            }}
+                          />
+                        </>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography className={classes.descriptionFont}>
+                          {row.descripcion}
+                        </Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row" align="center">
+                        {row.cantidad}
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        classes={{ root: classes.cellContainer }}
+                      >
+                        {`$ ${row.precio * row.cantidad}`}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </div>
-      ) : (
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="caption table">
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.headerRow}>Producto</TableCell>
-                <TableCell className={classes.headerRow}></TableCell>
-                <TableCell className={classes.headerRow}>Cantidad</TableCell>
-                <TableCell className={classes.headerRow}>Total</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {shopping?.productos?.map((row, index) => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    <>
-                      <Box
-                        component="img"
-                        src={row.imagen}
-                        sx={{
-                          maxHeight: "150px",
-                          maxWidth: "150px",
-                          pointerEvents: "none",
-                        }}
-                      />
-                    </>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Typography className={classes.descriptionFont}>
-                      {row.descripcion}
-                    </Typography>
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {row.cantidad}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {`$ ${row.precio * row.cantidad}`}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
       )}
-    </>
+    </div>
   );
 };
 
