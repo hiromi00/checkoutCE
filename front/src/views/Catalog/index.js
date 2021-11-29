@@ -4,6 +4,7 @@ import CardArticulo from "../../components/CardArticulo";
 import { getCatalog } from "../../services/catalog";
 import Utils from "../../utils/alert";
 import Loader from "../../components/Loader";
+import { SnackbarProvider } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -43,26 +44,28 @@ const Catalog = () => {
 
   const classes = useStyles();
   return (
-    <div className={classes.container}>
-      <div className={classes.cards}>
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            {sneakers.map((item, index) => (
-              <div key={item.id} className={classes.spaceCard}>
-                <CardArticulo
-                  id={item.id}
-                  model={item.model}
-                  price={item.price}
-                  path={item.image_path}
-                />
-              </div>
-            ))}
-          </>
-        )}
+    <SnackbarProvider maxSnack={3}>
+      <div className={classes.container}>
+        <div className={classes.cards}>
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              {sneakers.map((item, index) => (
+                <div key={item.id} className={classes.spaceCard}>
+                  <CardArticulo
+                    id={item.id}
+                    model={item.model}
+                    price={item.price}
+                    path={item.image_path}
+                  />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </SnackbarProvider>
   );
 };
 

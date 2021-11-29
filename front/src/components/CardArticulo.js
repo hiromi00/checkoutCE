@@ -6,10 +6,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { SnackbarProvider, useSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
 import { cart } from "../services/catalog";
 
-function CardMui({ id, model, price, path }) {
+const CardArticulo = ({ id, model, price, path }) => {
   const { enqueueSnackbar } = useSnackbar();
   const addToCart = async () => {
     await cart({ sneakers_id: id, quantity: 1, size_id: 5 })
@@ -47,14 +47,6 @@ function CardMui({ id, model, price, path }) {
       </CardActions>
     </Card>
   );
-}
+};
 
-export default function CardArticulo(props) {
-  return (
-    <>
-      <SnackbarProvider maxSnack={3}>
-        <CardMui {...props} />
-      </SnackbarProvider>
-    </>
-  );
-}
+export default CardArticulo;
