@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const specs = [
-  { nombre: "HTML 5", logo: <HtmlIcon />, link: "https://lenguajehtml.com/" },
+  { nombre: "HTML 5", logo: <HtmlIcon style={{ width: "0.75em", height: "0.75em" }} />, link: "https://lenguajehtml.com/" },
   {
     nombre: "Node Js",
     logo: <NodeLogo style={{ width: "1em", height: "1em" }} />,

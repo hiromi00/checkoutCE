@@ -1,7 +1,11 @@
 import axios from "axios";
 
 const getCart = () => {
-    return axios.get("checkout")
-}
+  return axios.get("checkout");
+};
 
-export { getCart };
+const sellProducts = () => {
+  return axios.post("checkout/sell");
+};
+
+export { getCart, sellProducts };

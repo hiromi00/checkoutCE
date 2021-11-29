@@ -40,8 +40,8 @@ const alerts = Utils;
 
 const ShoppingCart = () => {
   const [shopping, setShopping] = useState([]);
-  const classes = useStyles();
   const [loading, setLoading] = useState(false);
+  const classes = useStyles();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,69 +62,88 @@ const ShoppingCart = () => {
   return (
     <div>
       {loading && <Loader />}
-      <div>
-        <TableContainer component={Paper}>
-          <Table aria-label="caption table">
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.headerRow}>Producto</TableCell>
-                <TableCell className={classes.headerRow}></TableCell>
-                <TableCell className={classes.headerRow} align="center">
-                  Cantidad
-                </TableCell>
-                <TableCell className={classes.headerRow} align="center">
-                  {" "}
-                  Total
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {shopping?.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell component="th" scope="row">
-                    <>
-                      <Box
-                        component="img"
-                        src={`https://raw.githubusercontent.com/hiromi00/checkoutCE/main/api/${row.sneakers.image_path?.slice(
-                          1
-                        )}`}
-                        sx={{
-                          maxHeight: "150px",
-                          maxWidth: "150px",
-                          pointerEvents: "none",
-                        }}
-                      />
-                    </>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    <Typography className={classes.descriptionFont}>
-                      {row.sneakers.model}
-                    </Typography>
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {row.quantity}
-                  </TableCell>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    align="center"
-                    classes={{ root: classes.cellContainer }}
-                  >
-                    {`$ ${row.sneakers.price * row.quantity}`}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Button
-          variant="contained"
-          onClick={() => navigate("/checkout")}
-          sx={{ mt: 3, ml: 1 }}
-        >
-          Comprar ahora
-        </Button>
-      </div>
+      <Box>
+        {!shopping.length ? (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <ShoppingCartIcon />
+            <Typography sx={{ ml: "1em" }}>
+              No hay productos en tu carrito
+            </Typography>
+          </Box>
+        ) : (
+          <div>
+            <TableContainer component={Paper}>
+              <Table aria-label="caption table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.headerRow}>
+                      Producto
+                    </TableCell>
+                    <TableCell className={classes.headerRow}></TableCell>
+                    <TableCell className={classes.headerRow} align="center">
+                      Cantidad
+                    </TableCell>
+                    <TableCell className={classes.headerRow} align="center">
+                      {" "}
+                      Total
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {shopping?.map((row, index) => (
+                    <TableRow key={index}>
+                      <TableCell component="th" scope="row">
+                        <>
+                          <Box
+                            component="img"
+                            src={`https://raw.githubusercontent.com/hiromi00/checkoutCE/main/api/${row.sneakers.image_path?.slice(
+                              1
+                            )}`}
+                            sx={{
+                              maxHeight: "150px",
+                              maxWidth: "150px",
+                              pointerEvents: "none",
+                            }}
+                          />
+                        </>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography className={classes.descriptionFont}>
+                          {row.sneakers.model}
+                        </Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row" align="center">
+                        {row.quantity}
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        align="center"
+                        classes={{ root: classes.cellContainer }}
+                      >
+                        {`$ ${row.sneakers.price * row.quantity}`}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Button
+              variant="contained"
+              onClick={() => navigate("/checkout")}
+              sx={{ mt: 3, ml: 1 }}
+            >
+              Comprar ahora
+            </Button>
+          </div>
+        )}
+      </Box>
     </div>
   );
 };
