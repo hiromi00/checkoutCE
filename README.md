@@ -99,6 +99,10 @@ Al finalizar el pedido seremos redirigidos a nuestro carrito el cual se encontra
 
 ![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/emptyCart.PNG?raw=true"Carrito")
 
+Especificaciones
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/specs.PNG?raw=true"Especificaciones")
+
 
 
 
