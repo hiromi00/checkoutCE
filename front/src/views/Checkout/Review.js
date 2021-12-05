@@ -8,12 +8,12 @@ import Loader from "../../components/Loader";
 import Utils from "../../utils/alert";
 import { getCart } from "../../services/carrito";
 
-const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
+const addresses = ["La Noche 1331", "Guadalajara", "Jalisco", "44900", "México"];
 const payments = [
   { name: "Tarjeta", detail: "Visa" },
-  { name: "Card holder", detail: "Mr John Smith" },
-  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Expiry date", detail: "04/2024" },
+  { name: "Titular de la tarjeta", detail: "Pedro Perez Lopez" },
+  { name: "Número de tarjeta", detail: "xxxx-xxxx-xxxx-7451" },
+  { name: "Fecha de expiración", detail: "04/2024" },
 ];
 
 const alerts = Utils;
@@ -74,7 +74,7 @@ export default function Review() {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Envío
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
+          <Typography gutterBottom>Eduardo Pérez</Typography>
           <Typography gutterBottom>{addresses.join(", ")}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>

@@ -51,6 +51,7 @@ export default function PaymentForm() {
             fullWidth
             autoComplete="cc-csc"
             variant="standard"
+            type="password"
           />
         </Grid>
         <Grid item xs={12}>
