@@ -55,6 +55,7 @@ Pantalla principal
 ![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/carrito.PNG?raw=true"Dashboard")
 
 Pasos del checkout
+
 ![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/checkout1.PNG?raw=true"Checkout")
 
 ![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/checkout2.PNG?raw=true"Checkout")
@@ -62,6 +63,47 @@ Pasos del checkout
 ![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/checkout3.PNG?raw=true"Checkout")
 
 ![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/checkout4.PNG?raw=true"Checkout")
+#### Semana #3:
+
+Actualmente el proyecto se conectó totalmente con el backend, recibiendo y desplegando data real, al igual que la autenticación del usuario
+
+Signup de la aplicación
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/signup.PNG?raw=true"SignUp")
+
+Login de la aplicacion
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/login.PNG?raw=true"Login")
+
+Pantalla principal
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/dashboard.PNG?raw=true"Dashboard")
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/cartAdd.PNG?raw=true"Dashboard")
+
+Carrito
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/shopCart.PNG?raw=true"Carrito")
+
+Pasos del checkout
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/checkout1.PNG?raw=true"Checkout")
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/checkout2.PNG?raw=true"Checkout")
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/Checkout3.PNG?raw=true"Checkout")
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/pedido.PNG?raw=true"Checkout")
+
+Al finalizar el pedido seremos redirigidos a nuestro carrito el cual se encontrará vacío.
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/emptyCart.PNG?raw=true"Carrito")
+
+Especificaciones
+
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/specs.PNG?raw=true"Especificaciones")
+
+
 
 
 #### Datos técnicos:
