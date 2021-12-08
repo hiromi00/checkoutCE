@@ -105,7 +105,7 @@ Especificaciones
 
 Deploy con ngrok:
 
-![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/Ngrok.PNG?raw=true"Ngrok")
+![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/ngrok.PNG?raw=true"Ngrok")
 
 Link para acceder:
 
