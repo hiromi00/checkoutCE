@@ -107,9 +107,9 @@ Deploy con ngrok:
 
 ![react](https://github.com/hiromi00/checkoutCE/blob/main/assets/week%20%233/ngrok.PNG?raw=true"Ngrok")
 
-Link para acceder:
+Video demostrando el funcionando del proyecto con docker y ngrok:
 
-https://33bf-2806-2f0-5021-2a48-acf7-2759-1644-ecc8.ngrok.io/
+https://youtu.be/nRbt1mTSG5E
 
 
 #### Datos técnicos:
