@@ -1,24 +1,24 @@
-version: '3'
+version: "3"
 
 services:
   checkoutce_db:
     image: mysql:5.7
     container_name: checkoutce_db
-    restart: unless-stopped 
+    restart: unless-stopped
     volumes:
       - ./data:/var/lib/mysql
     ports:
       - ${MYSQL_EXPOSE_PORT}:3306
     environment:
-        MYSQL_DATABASE: ${MYSQL_DATABASE}
-        MYSQL_USER: ${MYSQL_USER}
-        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-        SERVICE_TAGS: ${SERVICE_TAGS}
-        SERVICE_NAME: ${SERVICE_NAME}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      SERVICE_TAGS: ${SERVICE_TAGS}
+      SERVICE_NAME: ${SERVICE_NAME}
     networks:
       - ce
-  
+
   checkoutce_back:
     env_file:
       - api/.env
@@ -51,6 +51,21 @@ services:
       - checkoutce_back
     # command: bash -c 'npm install && npm run start'
     restart: on-failure
+  ngrok:
+    image: shkoliar/ngrok:latest
+    ports:
+      - 4040:4040
+      - 4041:4041
+    environment:
+      NGROK_PROTOCOL: http
+      NGROK_PORT: checkoutce_front:8001
+      NGROK_AUTH: ${NGROK_AUTHTOKEN}
+    depends_on:
+      - checkoutce_db
+      - checkoutce_front
+      - checkoutce_back
+    networks:
+      - default
 
 networks:
   ce:

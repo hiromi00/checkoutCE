@@ -8,7 +8,7 @@ import axios from "axios";
 import { getToken } from "./services/auth";
 
 axios.defaults.baseURL =
-  process.env.REACT_APP_API_URL ?? `http://localhost:8000/`;
+  process.env.REACT_APP_API_URL ?? `https://5aca-187-189-190-187.ngrok.io/`;
 
 axios.interceptors.request.use(function (config) {
   config.headers.Authorization = getToken();
